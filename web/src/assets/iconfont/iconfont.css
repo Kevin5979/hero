@@ -1,0 +1,33 @@
+@font-face {
+  font-family: "iconfont";
+  src: url("iconfont.ttf?t=1591605261593") format("truetype"),
+    url("iconfont.svg?t=1591605261593#iconfont") format("svg");
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-card-hero:before {
+  content: "\e61f";
+}
+
+.icon-gengduo1:before {
+  content: "\e636";
+}
+
+.icon-zixun:before {
+  content: "\e646";
+}
+
+.icon-zhankai:before {
+  content: "\e60e";
+}
+
+.icon-zhankai1:before {
+  content: "\e600";
+}

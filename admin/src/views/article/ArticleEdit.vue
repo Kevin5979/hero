@@ -1,0 +1,69 @@
+<template>
+  <div class="category-edit">
+    <h2>{{id?'编辑':'新建'}}物品</h2>
+    <el-form label-width="120px" @submit.native.prevent="save">
+      <el-form-item label="名称">
+        <el-input v-model="model.name"></el-input>
+      </el-form-item>
+      <el-form-item label="图标">
+        <el-upload
+          class="avatar-uploader"
+          accept="image/*"
+          :action="uploadUrl"
+          :headers="getAuthHeaders()"
+          :show-file-list="false"
+          :on-success="afterUpload"
+        >
+          <img v-if="model.icon" :src="model.icon" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" native-type="submit">保存</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ArticleEdit",
+  props: {
+    id: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      model: {}
+    };
+  },
+  methods: {
+    afterUpload(res) {
+      this.$set(this.model, "icon", res.url);
+    },
+    async save() {
+      let res;
+      if (this.id) {
+        // 修改
+        res = await this.$http.put(`rest/articles/${this.id}`, this.model);
+      } else {
+        // 新增
+        res = await this.$http.post("rest/articles", this.model);
+      }
+      this.$router.push("/article/list");
+      this.$message({
+        type: "success",
+        message: "保存成功"
+      });
+    },
+    async fetch() {
+      const res = await this.$http.get(`rest/articles/${this.id}`);
+      this.model = res.data;
+    }
+  },
+  created() {
+    this.id && this.fetch();
+  }
+};
+</script>
